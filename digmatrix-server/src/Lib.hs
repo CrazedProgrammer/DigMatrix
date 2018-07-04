@@ -41,8 +41,7 @@ server = allBlocks
   where
     allBlocks =
       do
-        blocks <- getBlocks
-        pure blocks
+        getBlocks
     nBlocks =
       do
         blocks <- getBlocks

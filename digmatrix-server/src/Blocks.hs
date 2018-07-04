@@ -16,6 +16,7 @@ import Control.Monad.IO.Class
 import Linear.V3
 import Linear.Metric (distance)
 import Data.String
+import Data.Maybe
 
 data Block = Block
   { blockId     :: String
@@ -58,10 +59,7 @@ addBlocks xs ys =
 getBlocks :: MonadIO m => m [Block]
 getBlocks = do
   fileContent <- liftIO (B.readFile dataFile)
-  pure
-    (case (decode fileContent :: Maybe [Block]) of
-      Just blocks -> blocks
-      Nothing -> [])
+  pure (fromMaybe [] (decode fileContent :: Maybe [Block]))
 
 saveBlocks :: MonadIO m => [Block] -> m ()
 saveBlocks blocks = do
